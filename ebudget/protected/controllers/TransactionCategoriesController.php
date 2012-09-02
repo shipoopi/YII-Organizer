@@ -73,6 +73,8 @@ class TransactionCategoriesController extends Controller
 			if($model->save()){
 				Yii::app()->user->setFlash('success', 'Record saved successfully.');
 				$this->redirect(array('index'));
+			}else{
+				Yii::app()->user->setFlash('error', 'Problem in saving record.');
 			}
 		}
 
