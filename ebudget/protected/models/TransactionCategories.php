@@ -12,6 +12,10 @@
  */
 class TransactionCategories extends CActiveRecord
 {
+	
+	public $date_range_start;
+	public $date_range_end;
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -38,6 +42,7 @@ class TransactionCategories extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('name', 'required'),
 			array('name', 'length', 'max'=>512),
 			array('transaction_count', 'length', 'max'=>20),
 			array('created, modified', 'safe'),
@@ -68,7 +73,7 @@ class TransactionCategories extends CActiveRecord
 			'created' => 'Created',
 			'modified' => 'Modified',
 			'name' => 'Name',
-			'transaction_count' => 'Transaction Count',
+			'transaction_count' => 'Transaction Count'
 		);
 	}
 
@@ -93,4 +98,12 @@ class TransactionCategories extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	public function beforeSave(){
+	   if ($this->isNewRecord){
+			$this->created = new CDbExpression('NOW()');
+		}
+		$this->modified = new CDbExpression('NOW()');
+		//$this->user_id = Yii::app()->user->id;
+		return parent::beforeSave();
+	}	
 }
