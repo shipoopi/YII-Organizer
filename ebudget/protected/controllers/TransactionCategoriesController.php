@@ -122,9 +122,43 @@ class TransactionCategoriesController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('TransactionCategories');
+		$conditions = array();
+		$params = array();
+
+		$model=new TransactionCategories();
+		if(isset($_GET['TransactionCategories'])){
+			$model->attributes = $_GET['TransactionCategories'];
+			if (!empty($_GET['TransactionCategories']['name'])){
+				$conditions = 'tc.name like "%' . $_GET['TransactionCategories']['name'] . '%"';
+				$params = array (':name' => $_GET['TransactionCategories']['name']);
+			}
+		}
+		$transactionCategoriesCount = Yii::app()->db->createCommand()
+		->select('count(*) as count')
+		->from('transaction_categories tc')
+		->where($conditions, $params)
+		->queryScalar();
+
+		$transactionCategoriesSQL = Yii::app()->db->createCommand()
+		->select('tc.id, tc.created, tc.name, tc.transaction_count')
+		->from('transaction_categories tc')
+		->where($conditions, $params);
+		
+		$transactionCategoriesDP=new CSqlDataProvider($transactionCategoriesSQL->text, array(
+				'totalItemCount'=>$transactionCategoriesCount,
+				'sort'=>array(
+						'attributes'=>array(
+								'tc.id', 'tc.created', 'tc.name',
+						),
+				),
+				'pagination'=>array(
+						'pageSize'=> Yii::app()->params['listPerPage'],
+				),
+		));
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+				'transactionCategoriesDP' => $transactionCategoriesDP,
+				'transactionCategoriesCount' => $transactionCategoriesCount, 
+				'model' => $model
 		));
 	}
 
