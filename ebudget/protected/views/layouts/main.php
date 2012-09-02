@@ -16,11 +16,29 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
+
+<?php
+Yii::app()->clientScript->registerScript(
+   'myHideEffect',
+   '$(".info").animate({opacity: 1.0}, 3000).fadeOut("slow");',
+   CClientScript::POS_READY
+);
+?>
 </head>
 
 <body>
 
 <div class="container" id="page">
+
+<?php
+	//http://www.yiiframework.com/wiki/21/how-to-work-with-flash-messages/
+	$flashMessages = Yii::app()->user->getFlashes();
+	if ($flashMessages) {
+	    foreach($flashMessages as $key => $message) {
+	        echo '<div class="info flash-' . $key . '">' . $message . "</div>";
+	    }
+	 }
+?>
 
 	<div id="header">
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
@@ -44,7 +62,7 @@
 			'links'=>$this->breadcrumbs,
 		)); ?><!-- breadcrumbs -->
 	<?php endif?>
-
+	
 	<?php echo $content; ?>
 
 	<div class="clear"></div>
