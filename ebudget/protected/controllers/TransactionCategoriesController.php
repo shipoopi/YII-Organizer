@@ -14,7 +14,7 @@ class TransactionCategoriesController extends Controller
 	public function filters()
 	{
 		return array(
-			'accessControl', // perform access control for CRUD operations
+			//'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
@@ -109,6 +109,32 @@ class TransactionCategoriesController extends Controller
 		$this->render('update',array(
 			'model'=>$model,
 		));
+	}
+	public function actionGupdate(){
+		if (!empty($_POST['action'])){
+			$action_ids = array();
+			if (!empty($_POST['TransactionCategories']['id'])){
+				foreach($_POST['TransactionCategories']['id'] as $id){
+					if (!empty($id)){
+						$action_ids[] = $id;
+					}
+				}
+			}
+			if (!empty($action_ids)){
+				if ($_POST['action'] == 'delete'){
+					$condition = 'id in (' . implode(',', $action_ids) . ')'; 
+					TransactionCategories::model()->deleteAll($condition);
+					Yii::app()->user->setFlash('success', 'Records deleted successfully');
+				}
+				
+			}else{
+				Yii::app()->user->setFlash('error', 'Please select at least one record to perform action');
+			}
+			
+		}else{
+			Yii::app()->user->setFlash('error', 'Please select action to perform');
+		}
+		$this->redirect(array('index'));
 	}
 
 	/**
