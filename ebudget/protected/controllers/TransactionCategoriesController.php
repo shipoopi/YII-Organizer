@@ -70,8 +70,10 @@ class TransactionCategoriesController extends Controller
 		if(isset($_POST['TransactionCategories']))
 		{
 			$model->attributes=$_POST['TransactionCategories'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			if($model->save()){
+				Yii::app()->user->setFlash('success', 'Record saved successfully.');
+				$this->redirect(array('index'));
+			}
 		}
 
 		$this->render('create',array(

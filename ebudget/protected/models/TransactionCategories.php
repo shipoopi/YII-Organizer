@@ -103,7 +103,7 @@ class TransactionCategories extends CActiveRecord
 			$this->created = new CDbExpression('NOW()');
 		}
 		$this->modified = new CDbExpression('NOW()');
-		//$this->user_id = Yii::app()->user->id;
+		$this->user_id = Yii::app()->user->id;
 		return parent::beforeSave();
 	}	
 }
