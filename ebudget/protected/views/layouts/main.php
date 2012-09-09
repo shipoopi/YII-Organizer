@@ -41,7 +41,10 @@ Yii::app()->clientScript->registerScript(
 ?>
 
 	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+		<div id="logo">
+			<?php echo CHtml::encode(Yii::app()->settings->get('system', 'site_name')); ?> - 
+			<i><?php echo CHtml::encode(Yii::app()->settings->get('system', 'site_title')); ?></i>
+		</div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
@@ -52,6 +55,7 @@ Yii::app()->clientScript->registerScript(
 				array('label'=>'Contact', 'url'=>array('/site/contact')),
 				array('label'=>'Transactions', 'url'=>array('/transactions')),
 				array('label'=>'Transaction Categories', 'url'=>array('/transactionCategories')),
+				array('label'=>'Settings', 'url'=>array('/settings')),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
