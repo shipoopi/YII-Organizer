@@ -70,8 +70,8 @@ class SettingsController extends Controller
 		if(isset($_POST['Settings']))
 		{
 			$model->attributes=$_POST['Settings'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			Yii::app()->settings->set($model->attributes['category'], $model->attributes['key'], $model->attributes['value'], $toDatabase=true);  
+			$this->redirect(array('index'));
 		}
 
 		$this->render('create',array(
@@ -87,6 +87,7 @@ class SettingsController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+		$model->value = unserialize($model->value);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -94,8 +95,9 @@ class SettingsController extends Controller
 		if(isset($_POST['Settings']))
 		{
 			$model->attributes=$_POST['Settings'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			$model->attributes=$_POST['Settings'];
+			Yii::app()->settings->set($model->attributes['category'], $model->attributes['key'], $model->attributes['value'], $toDatabase=true);  
+			$this->redirect(array('index'));
 		}
 
 		$this->render('update',array(
