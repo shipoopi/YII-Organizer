@@ -5,6 +5,13 @@ IMPORTANT:This is my free time and not profit project, so I may not update frequ
 - The main purpose of this cool application is to experiment the power and features of Yii framework. 
 - This small application can manage your daily budget.
 
+Application Features
+--------------------
+- Custom query pagination
+- Flash message -  display success/failure messages in site top section with flash style <http://www.yiiframework.com/wiki/21/how-to-work-with-flash-messages/>
+- Records group manage - Wordpress like option
+- Database driven config - Handling site settings with database <http://www.yiiframework.com/extension/settings/>
+
 Installation Instructions
 -------------------------
 gii tool password: 123456
