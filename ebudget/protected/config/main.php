@@ -56,6 +56,8 @@ return array(
 			'username' => 'root',
 			'password' => '',
 			'charset' => 'utf8',
+			'enableParamLogging'=>true,
+			'enableProfiling'=>true,
 		),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
@@ -65,15 +67,17 @@ return array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
 				array(
-					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
+					//'class'=>'CFileLogRoute',
+					'class'=>'ext.yii-debug-toolbar.YiiDebugToolbarRoute',
+					//'levels'=>'error, warning',
+					//'ipFilters'=>array('127.0.0.1')
 				),
 				// uncomment the following to show log messages on web pages
-				/*
-				array(
+				/*array(
 					'class'=>'CWebLogRoute',
 				),
 				*/
+				
 			),
 		),
 		'cache'=>array(
