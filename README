@@ -11,6 +11,7 @@ Application Features
 - Flash message -  display success/failure messages in site top section with flash style <http://www.yiiframework.com/wiki/21/how-to-work-with-flash-messages/>
 - Records group manage - Wordpress like option
 - Database driven config - Handling site settings with database <http://www.yiiframework.com/extension/settings/>
+- Debug toolbar feature - Debugging with debug toolbar component <http://www.yiiframework.com/extension/yii-debug-toolbar/>
 
 Installation Instructions
 -------------------------
